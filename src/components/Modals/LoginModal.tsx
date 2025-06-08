@@ -18,7 +18,13 @@ import { useTranslation } from 'react-i18next';
 import { getImageAnalysis2 } from '../../utils/imageAnyliser';
 import useIsMobile from '../../utils/isMobile';
 
+const useMockApi = process.env.REACT_APP_USE_MOCK_API === 'true';
+
 export const LoginModal = memo(() => {
+  if (useMockApi) {
+    return null; // Do not render LoginModal in mock API mode
+  }
+
   const dispatch = useAppDispatch();
   const [t] = useTranslation(['home']);
   const isMobile = useIsMobile();
