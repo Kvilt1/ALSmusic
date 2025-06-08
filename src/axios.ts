@@ -1,7 +1,7 @@
 import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getRefreshToken } from './utils/spotify/login';
 import { getFromLocalStorageWithExpiry } from './utils/localstorage';
-import { handleMockRequest } from '../mockApi/mockHandler'; // Adjusted path
+import { handleMockRequest } from './mockApi/mockHandler'; // Adjusted path
 
 const path = 'https://api.spotify.com/v1' as const;
 const useMockApi = process.env.REACT_APP_USE_MOCK_API === 'true';
