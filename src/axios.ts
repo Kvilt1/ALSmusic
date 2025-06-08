@@ -1,38 +1,38 @@
-import Axios from 'axios';
-import { getRefreshToken } from './utils/spotify/login';
-import { getFromLocalStorageWithExpiry } from './utils/localstorage';
-
-const path = 'https://api.spotify.com/v1' as const;
-
-const access_token = getFromLocalStorageWithExpiry('access_token') as string;
-
-const axios = Axios.create({
-  baseURL: path,
-  headers: {},
-});
-
-if (access_token) {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
+export interface AxiosResponse<T> {
+  data: T;
 }
 
-axios.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response.status === 401) {
-      return getRefreshToken()
-        .then((token) => {
-          if (!token) return Promise.reject(error);
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-          error.config.headers['Authorization'] = 'Bearer ' + token;
-          return axios(error.config);
-        })
-        .catch(() => {
-          localStorage.removeItem('refresh_token');
-          localStorage.removeItem('access_token');
-        });
-    }
-    return Promise.reject(error);
-  }
-);
+// Simple mock axios that returns predefined responses for testing
+import { data as mockData } from './mock/mockData';
+
+const responses: Record<string, any> = { ...mockData };
+
+export const registerResponse = (url: string, data: any) => {
+  responses[url] = data;
+};
+
+interface RequestConfig {
+  params?: Record<string, any>;
+  data?: any;
+  headers?: Record<string, any>;
+}
+
+const get = async <T = any>(url: string, _config?: RequestConfig): Promise<AxiosResponse<T>> => {
+  return { data: responses[url] as T };
+};
+
+const post = async <T = any>(url: string, _data?: any, _config?: RequestConfig): Promise<AxiosResponse<T>> => {
+  return { data: responses[url] as T };
+};
+
+const put = async <T = any>(url: string, _data?: any, _config?: RequestConfig): Promise<AxiosResponse<T>> => {
+  return { data: responses[url] as T };
+};
+
+const del = async <T = any>(url: string, _config?: RequestConfig): Promise<AxiosResponse<T>> => {
+  return { data: responses[url] as T };
+};
+
+const axios = { get, post, put, delete: del, defaults: { headers: { common: {} } } };
 
 export default axios;
