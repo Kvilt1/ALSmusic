@@ -46,9 +46,9 @@
 
 🎵 React Redux: For global state management and smooth data flow across the app.
 
-🎵 <a href="https://developer.spotify.com/documentation/web-api/">Spotify Web API</a>: To fetch data like playlists, albums, and user information.
-
 🎵 <a href="https://developer.spotify.com/documentation/web-playback-sdk/">Spotify Playback SDK</a>: For real-time music playback control within the web client.
+
+ℹ️ **Mock API**: The original Spotify Web API integration has been removed. Mock responses are used for local testing.
 
 ## 📸 Screenshots
 
@@ -95,20 +95,25 @@ To run this project locally, follow these steps:
    yarn install
    ```
 
-4. Set up your Spotify Developer account and create a [new app](https://developer.spotify.com/dashboard/applications) to obtain your **Client ID** and **Redirect URI**. Add these to an `.env` file in the root of your project:
-
-   ```
-   REACT_APP_SPOTIFY_CLIENT_ID=<your id>
-   REACT_APP_SPOTIFY_REDIRECT_URL=<your redirect uri>
-   ```
-
-5. Start the development server:
+4. Start the development server:
 
    ```bash
-   yarn start
-   ```
+ yarn start
+  ```
 
-6. Open your browser and navigate to `http://localhost:3000`.
+5. Open your browser and navigate to `http://localhost:3000`.
+
+### Mock login
+
+When prompted, use the following credentials:
+
+```
+username: demo
+password: password
+```
+
+You can modify these default credentials by editing
+`src/utils/spotify/login.ts`.
 
 ## 🌐 2018 Version
 
