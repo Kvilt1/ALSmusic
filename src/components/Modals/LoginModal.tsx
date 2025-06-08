@@ -21,10 +21,6 @@ import useIsMobile from '../../utils/isMobile';
 const useMockApi = process.env.REACT_APP_USE_MOCK_API === 'true';
 
 export const LoginModal = memo(() => {
-  if (useMockApi) {
-    return null; // Do not render LoginModal in mock API mode
-  }
-
   const dispatch = useAppDispatch();
   const [t] = useTranslation(['home']);
   const isMobile = useIsMobile();
@@ -53,6 +49,10 @@ export const LoginModal = memo(() => {
       setOpen(false);
     };
   }, [imgUrl]);
+
+  if (useMockApi) {
+    return null; // Do not render LoginModal in mock API mode
+  }
 
   if (!imgUrl) return null;
 
